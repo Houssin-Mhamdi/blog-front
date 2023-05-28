@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import { getPostes } from '../../reduxToolkit/slices/PostSlices.js';
 export default function Slideshow(props) {
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(getPostes())
+    }, [])
+
+    const { data } = useSelector((state) => state.posts.data)
+    const  {loading,isSuccess}  = useSelector((state) => state.posts)
 
 
     const responsiveSettings = [
@@ -47,30 +58,39 @@ export default function Slideshow(props) {
             caption: 'Slide 3'
         },
     ];
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    
+    if (!isSuccess) {
+        return <div>Error occurred while fetching data.</div>;
+    }
+    
     return (
         <div className="slide-container ">
             <section className='bg-[#EFEBEB]'>
-                    <h3 className='text-black ml-12 mt-10 text-2xl'>{props.title}</h3>
+                <h3 className='text-black ml-12 mt-10 text-2xl'>{props.title}</h3>
             </section>
-            <Slide  indicators={false} autoplay={true} responsive={responsiveSettings}>
-                {slideImages.map((book) => {
+            <Slide indicators={false} autoplay={true} responsive={responsiveSettings}>
+                               
+                {isSuccess && data?.featureposts?.map((book) => {
                     return (
-                        <div className=' ' key={book.id} style={{
+                        <div className=' ' style={{
                             textAlign: 'center',
                             background: '#EFEBEB',
                             padding: '50px 50px',
                             fontSize: '30px'
                         }}>
-                            <div className='	pl-0 pr-0 pt-0 bg-white h-[25rem] w-72 shadow-2xl drop-shadow-2xl rounded-lg'>
-                                <img src={book.url} className='w-[360px] h-64 drop-shadow-lg rounded-lg' />
+                            <div key={book.id} className='	pl-0 pr-0 pt-0 bg-white h-[25rem] w-72 shadow-2xl drop-shadow-2xl rounded-lg'>
+                                <img src={book?.thumbnail?.url} className='w-[360px] h-64 drop-shadow-lg rounded-lg' />
                                 <div>
-                                    <h4 className='text-sm font-bold mt-2 text-left ml-3'>Top 10 realieble cars 2023</h4>
+                                    <h4 className='text-sm font-bold mt-2 text-left ml-3'>{book?.title}</h4>
                                     <div className='text-lg'>
                                         {/* <Rating rating={book.rating} reviews={book.reviews} /> */}
                                     </div>
                                     <div className='text-xs text-left ml-3 pt-1 pb-2 text-gray-800 font-normal'>
-                                        Hier you can find the most common problems in M-Benz GLE CLASS
-
+                                        {book?.content}
                                     </div>
                                     {/* <hr className='border-1 border-black' /> */}
                                     <div className='flex text-center justify-center items-center gap-5 mt-1' >
@@ -78,7 +98,7 @@ export default function Slideshow(props) {
                                         {/* <BsFillHandbagFill onClick={() => addtoCart({ ...book, quantity: 1 })} size={25} cursor={'pointer'} /> */}
                                     </div>
                                 </div>
-                                    <p className='text-xs text-left ml-3 pt-10 pb-2 text-gray-800 font-normal'>publié : il y a 4 ans</p>
+                                <p className='text-xs text-left ml-3 pt-10 pb-2 text-gray-800 font-normal'>publié : il y a 4 ans</p>
                             </div>
                         </div>
                     )

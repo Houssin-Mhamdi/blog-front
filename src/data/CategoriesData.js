@@ -1,19 +1,24 @@
+
 export const categories = [
     {
-        title:"Voiture",
-        image:'../../images/car.png'
+        id:1,
+        title: "Voiture",
+        image: 'https://res.cloudinary.com/dptdr8oel/image/upload/v1685199411/car_skwkyk.png'
     },
     {
-        title:"Moto",
-        image:'../../images/motorbike-side-view.png'
+        id:2,
+        title: "Moto",
+        image: 'https://res.cloudinary.com/dptdr8oel/image/upload/v1685199411/motorbike-side-view_mzwe77.png'
     },
     {
-        title:"Maintenance",
-        image:'../../images/settings 1.png'
+        id:3,
+        title: "Maintenance",
+        image: 'https://res.cloudinary.com/dptdr8oel/image/upload/v1685199411/settings_1_nimhkx.png'
     },
-    
+
     {
-        title:"Comparaison",
-        image:'../../images/comparison.png'
+        id:4,
+        title: "Comparaison",
+        image: 'https://res.cloudinary.com/dptdr8oel/image/upload/v1685199410/comparison_rlreg7.png'
     },
 ]
